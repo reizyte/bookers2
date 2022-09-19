@@ -1,1 +1,30 @@
 <h1>本詳細</h1>
+
+<p id="notice"></p>
+<div class="container px-5 px-sm-0">
+  <div class="row">
+
+<%= render 'users/list', user: @user, book: @book %>
+
+<div class="col-md-8 offset-md-1">
+ <h2>Book detail</h2>
+ <table class="table">
+  <tbody>
+   <tr>
+    <td><%= image_tag @user.get_profile_image(80,80) %><br><%= @user.name %></td>
+    <td><%= @book.title %></td>
+    <td><%= @book.body %></td>
+    <td><%= link_to edit_book_path(@book.id), class:'btn btn-sm btn-success' do  %>
+        Edit
+        <% end %>
+    </td>
+    <td><%= link_to book_path(@book.id), method: :delete, class:'btn btn-sm btn-danger' do %>
+        Destroy
+        <% end %>
+    </td>
+   </tr>
+  </tbody>
+ </table>
+ </div>
+ </div>
+</div>
