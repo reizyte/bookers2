@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+  befor_action :correct_user, only: [:edit, :update]
   def new
 
   end
@@ -30,9 +31,6 @@ class BooksController < ApplicationController
       redirect_to book_path(book.id)
     else
       @books = Book.all
-      @user = current_user
-      @users = User.all
-      @book = Book.new
       render :index
     end
   end
@@ -49,7 +47,7 @@ class BooksController < ApplicationController
       flash[:notice] = "You have updated book successfully."
       redirect_to book_path(@book.id)
     else
-      render :new
+      render :edit
     end
   end
 
@@ -57,4 +55,6 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :body, :image)
   end
+
+  
 end
