@@ -6,6 +6,10 @@ class User < ApplicationRecord
 
    has_one_attached :profile_image
    has_many :books, dependent: :destroy
+   has_many :relationships, foreign_key: :followed_id, dependent: :destroy
+   has_many :followeds, through: :relationships, source: :follower
+   has_many :reverce_of_relationshiips, class_name: "Relationship", foreign_key: :follower_id, dependent: :destroy
+   has_many :followers, through: :reverce_of_relationshiips, source: :followed
 
    validates :name, uniqueness: true
    validates :name, length: {in: 2..20}
@@ -21,5 +25,8 @@ class User < ApplicationRecord
     profile_image.variant(resize_to_limit: [width, height]).processed
     end
 
+    def is_followed_by(user)
+      reverce_of_relationshiips.find_by(followed_id: user.id).present?
+    end
 
 end

@@ -13,8 +13,6 @@ class UsersController < ApplicationController
    if @user.id != current_user.id
      redirect_to user_path(current_user.id)
    end
-
-
   end
 
 
@@ -35,7 +33,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def followeds
+    user = User.find(params[:id])
+    @users = user.followeds
+  end
 
+  def followers
+    user = User.find(params[:id])
+    @users = user.followers
+  end
 
 
   private
